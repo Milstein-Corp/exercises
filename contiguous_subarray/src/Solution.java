@@ -1,6 +1,7 @@
 public class Solution {
 
-    /** find the largest continguous subarray of {@code nums} and
+    /**
+     * finds the largest contiguous subarray of {@code nums} and
      * returns its sum.
      *
      * @param nums The array of interest
