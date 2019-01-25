@@ -33,18 +33,35 @@ public class Solution {
 
     public static void fill_in(ArrayList<Integer> board,
                                ArrayList<Integer> allowed,
-                               List<List<Integer>> answers, int n) {
+                               List<List<Integer>> answers, int n, int depth) {
 
         if(board.size() == n) { // the board is full of queens
-            answers.add(board);
+            System.out.println(depth + ": base case");
+            answers.add(List.copyOf(board));
 
         } else { //iterate over all the remaining allowed values
             for (Iterator<Integer> it = allowed.iterator(); it.hasNext(); ) {
                 int a = it.next();
+                System.out.println("" + depth + ": " + "board size = " + board.size());
+                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
+                System.out.println("" + depth + ": " + "answers size = " + answers.size());
+                System.out.println("operations");
                 board.add(a);
                 allowed.remove(Integer.valueOf(a));
-                fill_in(board, allowed, answers, n);
-                board.remove(board.size());
+
+                System.out.println("" + depth + ": " + "board size = " + board.size());
+                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
+                System.out.println("" + depth + ": " + "answers size = " + answers.size());
+                System.out.println("operations");
+
+                fill_in(board, allowed, answers, n, depth+1);
+
+                System.out.println("" + depth + ": " + "board size = " + board.size());
+                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
+                System.out.println("" + depth + ": " + "answers size = " + answers.size());
+                System.out.println("operations");
+
+                board.remove(board.size()-1);
                 allowed.add(Integer.valueOf(a));
             }
         }

@@ -10,10 +10,10 @@ import static junit.framework.TestCase.fail;
 public class my_tests {
     protected static final int SECOND = 1000;
 
-
-
     /**
-     * An empty board is not added to answers
+     * Whitebox test for fill_in(). Confirm that an empty board is not
+     * considered a final answer. Restated, an empty List<Integer> is not
+     * being added to the List<List<Integer>>.
      */
     @Test(timeout=SECOND)
     public void baseCase() {
@@ -26,35 +26,33 @@ public class my_tests {
         board.add(4);
         board.add(3);
 
-        Solution.fill_in(board, allowed, discovered_answers, n);
+        Solution.fill_in(board, allowed, discovered_answers, n, 0);
 
         System.out.println("board: " + board);
         System.out.println();
         System.out.println("allowed: " + allowed);
         System.out.println();
-        System.out.println("answers: " + discovered_answers);
+        System.out.println("resulting answers: " + discovered_answers);
         System.out.println("-----------------------");
         assert discovered_answers.size() == 0;
+
+        Solution.same_boards(actual_answers, discovered_answers);
     }
 
     /**
-     * Confirm that fill_in adds a full board to answers
+     * Whitebox test for fill_in(). Confirm that fill_in considers a full board
+     * as a final answer. Restated: A List<Integers> that is full (has n
+     * elements) is added to List<List<Integer>>.
      */
     @Test(timeout=SECOND)
     public void baseCase1() {
+        int n = 4;
         List<List<Integer>> actual_answers = new ArrayList<List<Integer>>();
         List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
-        ArrayList<Integer> board = new ArrayList<Integer>();
-        ArrayList<Integer> allowed  = new ArrayList<Integer>();
+        ArrayList<Integer> allowed = new ArrayList<Integer>(Arrays.asList(new Integer[]{}));
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList(new Integer[]{4,3,4,3}));
 
-        int n = 4;
-
-        board.add(4);
-        board.add(3);
-        board.add(4);
-        board.add(3);
-
-        Solution.fill_in(board, allowed, discovered_answers, n);
+        Solution.fill_in(board, allowed, discovered_answers, n, 0);
 
         System.out.println("board: " + board);
         System.out.println();
@@ -63,11 +61,17 @@ public class my_tests {
         System.out.println("answers: " + discovered_answers);
         System.out.println("------------------------");
         assert discovered_answers.size() == 1;
+        actual_answers.add(Arrays.asList(new Integer[]{4,3,4,3}));
+
+        Solution.same_boards(actual_answers, discovered_answers);
     }
 
     /**
-     * Confirm correct answer for board with 1 row left to fill
-     * and only 1 more allowed column
+     * Blackbox test for fill_in(..). When a board has one row left to fill, and
+     * there is one allowed column left, fill_in(..) will assign that column,
+     * thus filling the board. A List<Integers> ('board') with n-1 elements has
+     * an element added to it when another List<Integers> ('allowed')
+     * is not empty.
      */
     @Test(timeout=SECOND)
     public void recursiveCase() {
@@ -80,13 +84,19 @@ public class my_tests {
         ArrayList<Integer> answer = new ArrayList<Integer>(Arrays.asList(0,1,2,3));
         actual_answers.add(answer);
 
-        Solution.fill_in(board, allowed, discovered_answers, n);
+        Solution.fill_in(board, allowed, discovered_answers, n, 0);
+
+        System.out.println(discovered_answers.get(0).size());
+        System.out.println(actual_answers.get(0).size());
 
         Solution.same_boards(discovered_answers, actual_answers);
     }
 
     /**
-     * confirm that same_boards works
+     * Blackbox test for same_boards. When handed two identical sets of answers
+     * (List<List<Integer>>, same_boards does not throw an error. If the two
+     * sets of answers are different, same_boards throws an error. Note: order
+     * of the answers matters.
      */
     @Test(timeout=SECOND)
     public void test_same_boards(){
