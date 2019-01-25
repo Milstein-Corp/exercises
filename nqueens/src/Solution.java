@@ -50,13 +50,18 @@ public class Solution {
         }
     }
 
-    public static void same_boards(List<List<Integer>> discovered_answers, List<List<Integer>> actual_answers) {
+    public static void same_boards(List<List<Integer>> discovered_answers,
+                                   List<List<Integer>> actual_answers) {
         assert discovered_answers.size() == actual_answers.size();
 
         for(int i = 0; i < discovered_answers.size(); i++) {
             List<Integer> d = discovered_answers.get(i);
             List<Integer> a = actual_answers.get(i);
-
+            assert d.size() == a.size();
+            for(int j = 0; j < d.size(); j++) {
+                assert d.get(j) == a.get(j);
+            }
         }
+
     }
 }
