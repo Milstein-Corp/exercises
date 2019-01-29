@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        List<List<String>> results = Solution.solveNQueens(8);
+        List<List<String>> results = Solution.solveNQueens(3);
 
         for (Iterator<List<String>> it = results.iterator(); it.hasNext(); ) {
             ArrayList<String> board = (ArrayList<String>) it.next();

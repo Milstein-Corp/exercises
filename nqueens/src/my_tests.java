@@ -85,10 +85,57 @@ public class my_tests {
         actual_answers.add(answer);
 
         Solution.fill_in(board, allowed, discovered_answers, n, 0);
+        Solution.same_boards(discovered_answers, actual_answers);
+    }
 
-        System.out.println(discovered_answers.get(0).size());
-        System.out.println(actual_answers.get(0).size());
+    /**
+     * Blackbox test for fill_in(..). Find the solutions to the 2x2 board,
+     * where the queen is not allowed to move diagonally.
+     */
+    @Test(timeout=SECOND)
+    public void recursiveCase2() {
+        int n=2;
+        List<List<Integer>> actual_answers = new ArrayList<List<Integer>>();
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
 
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
+        ArrayList<Integer> allowed = new ArrayList<Integer>(Arrays.asList(0,1));
+        ArrayList<Integer> answer1 = new ArrayList<Integer>(Arrays.asList(0,1));
+        ArrayList<Integer> answer2 = new ArrayList<Integer>(Arrays.asList(1,0));
+        actual_answers.add(answer1);
+        actual_answers.add(answer2);
+
+        Solution.fill_in(board, allowed, discovered_answers, n, 0);
+        Solution.same_boards(discovered_answers, actual_answers);
+    }
+
+    /**
+     * Blackbox test for fill_in(..). Find the solutions to the 3x4 board,
+     * where the queen is not allowed to move diagonally.
+     */
+    @Test(timeout=SECOND)
+    public void recursiveCase3() {
+        int n=3;
+        List<List<Integer>> actual_answers = new ArrayList<List<Integer>>();
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
+
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
+        ArrayList<Integer> allowed = new ArrayList<Integer>(Arrays.asList(0,1,2));
+        ArrayList<Integer> answer1 = new ArrayList<Integer>(Arrays.asList(0,1,2));
+        ArrayList<Integer> answer2 = new ArrayList<Integer>(Arrays.asList(0,2,1));
+        ArrayList<Integer> answer3 = new ArrayList<Integer>(Arrays.asList(1,0,2));
+        ArrayList<Integer> answer4 = new ArrayList<Integer>(Arrays.asList(1,2,0));
+        ArrayList<Integer> answer5 = new ArrayList<Integer>(Arrays.asList(2,0,1));
+        ArrayList<Integer> answer6 = new ArrayList<Integer>(Arrays.asList(2,1,0));
+
+        actual_answers.add(answer1);
+        actual_answers.add(answer2);
+        actual_answers.add(answer3);
+        actual_answers.add(answer4);
+        actual_answers.add(answer5);
+        actual_answers.add(answer6);
+
+        Solution.fill_in(board, allowed, discovered_answers, n, 0);
         Solution.same_boards(discovered_answers, actual_answers);
     }
 
@@ -100,25 +147,23 @@ public class my_tests {
      */
     @Test(timeout=SECOND)
     public void test_same_boards(){
+//        create two boards
         List<List<Integer>> a = new ArrayList<List<Integer>>();
         List<List<Integer>> b = new ArrayList<List<Integer>>();
-
-//        Create Lists to put in the 'boards' (lists) a and b
+//        Create Lists to put in the 'boards'
         List<Integer> one = new ArrayList<>();
         one.add(4);
         one.add(5);
-
         List<Integer> two = new ArrayList<>();
         for(int k = 0; k < 3000; k++){
             two.add(k);
         }
-
         List<Integer> three = new ArrayList<>();
 
 //       test same_boards on two empty lists
         Solution.same_boards(a, b);
 
-//        test same_boards when one of the lists has one list and the other is empty
+//        test same_boards when one of the boards has one list and the other is empty
         a.add(one);
         try {
             Solution.same_boards(a,b);
@@ -139,7 +184,6 @@ public class my_tests {
         } catch (AssertionError e) {
         }
 
-
 //        the lists are identical, each holding a list with 2 ints, a lists with 3000 ints, and a list
 //        with no ints
         a.remove(two);
@@ -147,6 +191,20 @@ public class my_tests {
         a.add(two);
         b.add(two);
         Solution.same_boards(a,b);
+    }
+
+    @Test(timeout=SECOND)
+    public void test_array_list(){
+        ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(3,2,1,0));
+        System.out.println(a);
+
+        Integer removed = a.remove(2);
+        System.out.println(a);
+        System.out.println("removed: " + removed);
+
+        a.add(2,removed);
+        System.out.println(a);
+
     }
 
 }

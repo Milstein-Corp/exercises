@@ -37,32 +37,74 @@ public class Solution {
 
         if(board.size() == n) { // the board is full of queens
             System.out.println(depth + ": base case");
+            System.out.println("" + depth + ": " + "allowed = " + allowed);
+            System.out.println("" + depth + ": " + "board = " + board);
+
+
             answers.add(List.copyOf(board));
-
+            System.out.println("" + depth + ": " + "answers = " + answers);
+            System.out.println();
         } else { //iterate over all the remaining allowed values
-            for (Iterator<Integer> it = allowed.iterator(); it.hasNext(); ) {
-                int a = it.next();
-                System.out.println("" + depth + ": " + "board size = " + board.size());
-                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
-                System.out.println("" + depth + ": " + "answers size = " + answers.size());
-                System.out.println("operations");
+            int size = allowed.size();
+            for (int it = 0; it < size; it++) {
+                System.out.println(depth + ": recursive case");
+                System.out.println("" + depth + ": " + "allowed = " + allowed);
+                System.out.println("" + depth + ": " + "board = " + board);
+                System.out.println("" + depth + ": " + "answers = " + answers);
+                System.out.println("" + depth + ": " + "index = " + it);
+                System.out.println();
+
+                int a = allowed.remove(it);
                 board.add(a);
-                allowed.remove(Integer.valueOf(a));
-
-                System.out.println("" + depth + ": " + "board size = " + board.size());
-                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
-                System.out.println("" + depth + ": " + "answers size = " + answers.size());
-                System.out.println("operations");
-
                 fill_in(board, allowed, answers, n, depth+1);
 
-                System.out.println("" + depth + ": " + "board size = " + board.size());
-                System.out.println("" + depth + ": " + "allowed size = " + allowed.size());
-                System.out.println("" + depth + ": " + "answers size = " + answers.size());
-                System.out.println("operations");
-
                 board.remove(board.size()-1);
-                allowed.add(Integer.valueOf(a));
+                allowed.add(it,a);
+            }
+        }
+    }
+
+    public static void fill_in_final(ArrayList<Integer> board,
+                               ArrayList<Integer> allowed,
+                               List<List<Integer>> answers, int n, int depth) {
+
+        if(board.size() == n) { // the board is full of queens
+            System.out.println(depth + ": base cases");
+            System.out.println("" + depth + ": " + "allowed = " + allowed);
+            System.out.println("" + depth + ": " + "board = " + board);
+
+
+            answers.add(List.copyOf(board));
+            System.out.println("" + depth + ": " + "answers = " + answers);
+            System.out.println();
+        } else { //iterate over all the remaining allowed values
+            int size = allowed.size();
+            for (int it = 0; it < size; it++) {
+                System.out.println(depth + ": recursive case");
+                System.out.println("" + depth + ": " + "allowed = " + allowed);
+                System.out.println("" + depth + ": " + "board = " + board);
+                System.out.println("" + depth + ": " + "answers = " + answers);
+                System.out.println("" + depth + ": " + "index = " + it);
+                System.out.println();
+
+                int candiate = allowed.remove(it);
+                int next_row = board.size();
+                ArrayList<Integer> forbidden = new ArrayList<Integer>();
+                for(int row = 0; row < next_row; row++) {
+                    int occupied = board.get(row);
+                    forbidden.add(occupied + next_row - row);
+                    forbidden.add(occupied - row + next_row);
+                }
+
+                if(!forbidden.contains(candiate)){
+                    board.add(next_row, candiate);
+                    fill_in_final(board, allowed, answers, n, depth + 1);
+
+                    board.remove(board.size() - 1);
+                    allowed.add(it, candiate);
+                } else {
+                    allowed.add(it, candiate);
+                }
             }
         }
     }
