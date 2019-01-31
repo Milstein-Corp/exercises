@@ -4,6 +4,7 @@ import org.junit.rules.Timeout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import static junit.framework.TestCase.fail;
 
@@ -193,20 +194,79 @@ public class my_tests {
         Solution.same_boards(a,b);
     }
 
+    /**
+     * whitebox test for fill_in_final(..). Confirm that a board of the
+     * appropriate size is added to answers, regardless of whether or not
+     * allowed is empty.
+     */
     @Test(timeout=SECOND)
-    public void test_array_list(){
-        ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(3,2,1,0));
-        System.out.println(a);
+    public void base_case_final(){
+        int n = 4;
+        List<List<Integer>> actual_answers = new ArrayList<List<Integer>>();
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList(3,2,1,0));
+        ArrayList<Integer> allowed  = new ArrayList<Integer>(Arrays.asList(4,3,2,9));
 
-        Integer removed = a.remove(2);
-        System.out.println(a);
-        System.out.println("removed: " + removed);
+        ArrayList<Integer> answer1 = new ArrayList<Integer>(Arrays.asList(3, 2, 1, 0));
+        actual_answers.add(answer1);
 
-        a.add(2,removed);
-        System.out.println(a);
+        Solution.fill_in_final(board, allowed, discovered_answers, n, 0);
 
+        Solution.same_boards(discovered_answers, actual_answers);
     }
 
+    /**
+     * Blackbox test for base_case_final(..) for the n=4 case.
+     */
+    @Test(timeout=SECOND)
+    public void n4_final() {
+        int n = 4;
+        List<List<Integer>> actual_answers = new ArrayList<List<Integer>>();
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
+        ArrayList<Integer> allowed  =
+                new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
+
+        ArrayList<Integer> answer1 =
+                new ArrayList<Integer>(Arrays.asList(1, 3, 0, 2));
+        ArrayList<Integer> answer2 =
+                new ArrayList<Integer>(Arrays.asList(2, 0, 3, 1));
+
+        actual_answers.add(answer1);
+        actual_answers.add(answer2);
+
+        Solution.fill_in_final(board,
+                allowed, discovered_answers, 4, 0);
+
+        Solution.same_boards(actual_answers, discovered_answers);
+    }
+
+    @Test(timeout=SECOND)
+    public void test_vector(){
+        Vector<String> v = new Vector<String>();
+        v.add("sugar");
+        v.add("salt");
+        System.out.println(v.capacity());
+        System.out.println(v.size());
+    }
+
+    @Test(timeout=SECOND)
+    public void convert() {
+        int n = 4;
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
+        ArrayList<Integer> allowed  =
+                new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
+
+        Solution.fill_in_final(board, allowed, discovered_answers,n,0);
+
+        Vector<Vector<String>> v = Solution.convert(discovered_answers);
+
+        System.out.println(v.size());
+        System.out.println(v.get(0));
+        System.out.println(v.get(1));
+
+    }
 }
 
 

@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
 
@@ -93,7 +89,7 @@ public class Solution {
                 for(int row = 0; row < next_row; row++) {
                     int occupied = board.get(row);
                     forbidden.add(occupied + next_row - row);
-                    forbidden.add(occupied - row + next_row);
+                    forbidden.add(occupied + row - next_row);
                 }
 
                 if(!forbidden.contains(candiate)){
@@ -122,5 +118,32 @@ public class Solution {
             }
         }
 
+    }
+
+    public static Vector<Vector<String>> convert(List<List<Integer>> in) {
+        Vector<Vector<String>> v = new Vector<Vector<String>>();
+
+        int n = in.get(0).size();
+
+        for (Iterator<List<Integer>> it = in.iterator(); it.hasNext(); ) {
+            List<Integer> board = it.next();
+            Vector<String> board_t = new Vector<String>();
+
+            for(int i = 0; i < n; i++) {
+                Integer c0 = board.get(i);
+                String row = "";
+                for (int c = 0; c < n; c++) {
+                    if(c == c0) {
+                        row = row + "Q";
+                    } else {
+                        row = row + ".";
+                    }
+                }
+                board_t.add(row);
+            }
+            v.add(board_t);
+
+        }
+        return v;
     }
 }
