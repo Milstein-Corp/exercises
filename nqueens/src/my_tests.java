@@ -253,14 +253,8 @@ public class my_tests {
     @Test(timeout=SECOND)
     public void convert() {
         int n = 4;
-        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
-        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
-        ArrayList<Integer> allowed  =
-                new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3));
 
-        Solution.fill_in_final(board, allowed, discovered_answers,n,0);
-
-        Vector<Vector<String>> v = Solution.convert(discovered_answers);
+        List<List<String>> v = Solution.solveNQueens(n);
 
         System.out.println(v.size());
         System.out.println(v.get(0));

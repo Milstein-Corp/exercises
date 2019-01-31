@@ -3,28 +3,20 @@ import java.util.*;
 public class Solution {
 
     public static List<List<String>> solveNQueens(int n) {
+        List<List<Integer>> discovered_answers = new ArrayList<List<Integer>>();
+        ArrayList<Integer> board = new ArrayList<Integer>(Arrays.asList());
 
-        ArrayList<String> answer;
-        List<List<String>> answers = new ArrayList<List<String>>();
+        ArrayList<Integer> allowed  =
+                new ArrayList<Integer>();
 
-        for(int i = 0; i < 2; i++) {
-
-
-            answer = new ArrayList<String>();
-            for (int r = 0; r < n; r++) {
-                String row = "";
-                for (int c = 0; c < n; c++) {
-                    row += ".";
-                }
-                answer.add(row);
-            }
-            answers.add(answer);
-
-
-
+        for(int k = 0; k < n; k ++) {
+            allowed.add(k);
         }
 
-        return answers;
+        Solution.fill_in_final(board, allowed, discovered_answers,n,0);
+
+        List<List<String>> v = Solution.convert(discovered_answers, n);
+        return v;
     }
 
     public static void fill_in(ArrayList<Integer> board,
@@ -36,8 +28,7 @@ public class Solution {
             System.out.println("" + depth + ": " + "allowed = " + allowed);
             System.out.println("" + depth + ": " + "board = " + board);
 
-
-            answers.add(List.copyOf(board));
+            answers.add(new ArrayList<Integer>(board));
             System.out.println("" + depth + ": " + "answers = " + answers);
             System.out.println();
         } else { //iterate over all the remaining allowed values
@@ -65,23 +56,23 @@ public class Solution {
                                List<List<Integer>> answers, int n, int depth) {
 
         if(board.size() == n) { // the board is full of queens
-            System.out.println(depth + ": base cases");
-            System.out.println("" + depth + ": " + "allowed = " + allowed);
-            System.out.println("" + depth + ": " + "board = " + board);
+//            System.out.println(depth + ": base cases");
+//            System.out.println("" + depth + ": " + "allowed = " + allowed);
+//            System.out.println("" + depth + ": " + "board = " + board);
 
 
-            answers.add(List.copyOf(board));
-            System.out.println("" + depth + ": " + "answers = " + answers);
-            System.out.println();
+            answers.add(new ArrayList<Integer>(board));
+//            System.out.println("" + depth + ": " + "answers = " + answers);
+//            System.out.println();
         } else { //iterate over all the remaining allowed values
             int size = allowed.size();
             for (int it = 0; it < size; it++) {
-                System.out.println(depth + ": recursive case");
-                System.out.println("" + depth + ": " + "allowed = " + allowed);
-                System.out.println("" + depth + ": " + "board = " + board);
-                System.out.println("" + depth + ": " + "answers = " + answers);
-                System.out.println("" + depth + ": " + "index = " + it);
-                System.out.println();
+//                System.out.println(depth + ": recursive case");
+//                System.out.println("" + depth + ": " + "allowed = " + allowed);
+//                System.out.println("" + depth + ": " + "board = " + board);
+//                System.out.println("" + depth + ": " + "answers = " + answers);
+//                System.out.println("" + depth + ": " + "index = " + it);
+//                System.out.println();
 
                 int candiate = allowed.remove(it);
                 int next_row = board.size();
@@ -120,10 +111,10 @@ public class Solution {
 
     }
 
-    public static Vector<Vector<String>> convert(List<List<Integer>> in) {
-        Vector<Vector<String>> v = new Vector<Vector<String>>();
+    public static List<List<String>> convert(List<List<Integer>> in, int n) {
+        List<List<String>> v = new ArrayList<List<String>>();
 
-        int n = in.get(0).size();
+
 
         for (Iterator<List<Integer>> it = in.iterator(); it.hasNext(); ) {
             List<Integer> board = it.next();
