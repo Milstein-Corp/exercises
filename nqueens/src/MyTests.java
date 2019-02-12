@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import static junit.framework.TestCase.fail;
 
-public class my_tests {
+public class MyTests {
     protected static final int SECOND = 1000;
 
     /**
