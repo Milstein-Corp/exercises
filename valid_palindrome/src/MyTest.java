@@ -12,6 +12,8 @@ public class MyTest {
         String p5 = "abcdrdcba";
         String p6 = "a bcdrdcba";
         String p7 = "A man, a plan, a canal: Panama";
+        String p8 = "!!!";
+        String p9 = "";
 
         assert(Main.isPalindrome(p1) == true);
         assert(Main.isPalindrome(p2) == true);
@@ -20,5 +22,8 @@ public class MyTest {
         assert(Main.isPalindrome(p5) == true);
         assert(Main.isPalindrome(p6) == true);
         assert(Main.isPalindrome(p7) == true);
+        assert(Main.isPalindrome(p8) == true);
+        assert(Main.isPalindrome(p9) == true);
+
     }
 }

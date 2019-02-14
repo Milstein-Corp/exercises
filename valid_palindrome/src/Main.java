@@ -5,10 +5,17 @@ public class Main {
     }
 
     public static boolean isPalindrome(String s) {
+        if(s.isEmpty()) {
+            return true;
+        }
         s = s.toLowerCase();
         boolean is = true; // assume true is problem for edge cases
         int a = 0;
         int b = s.length()-1;
+
+        int[] pos = findAlphaNumericChar(a, b, s);
+        a = pos[0];
+        b = pos[1];
 
         while(b>a) {
             if(s.charAt(a) != s.charAt(b)) {
@@ -17,32 +24,26 @@ public class Main {
             }
             a += 1;
             b -= 1;
-            a = findAlphaNumericCharFront(a, s);
-            b = findAlphaNumericCharBack(b, s);
-
+            pos = findAlphaNumericChar(a, b, s);
+            a = pos[0];
+            b = pos[1];
         }
         return is;
     }
 
-    private static int findAlphaNumericCharFront(int x, String s) {
-        boolean aAlpha = Character.isLetter(s.charAt(x)) || Character.isDigit(s.charAt(x));
+    private static int[] findAlphaNumericChar(int a, int b, String s) {
+        boolean aAlpha = Character.isLetter(s.charAt(a)) || Character.isDigit(s.charAt(a));
+        boolean bAlpha = Character.isLetter(s.charAt(b)) || Character.isDigit(s.charAt(b));
 
-        while(!aAlpha)  {
-            x += 1;
-            aAlpha = Character.isLetter(s.charAt(x)) || Character.isDigit(s.charAt(x));
+        while(!aAlpha && b>a)  {
+            a += 1;
+            aAlpha = Character.isLetter(s.charAt(a)) || Character.isDigit(s.charAt(a));
+        }
+        while(!bAlpha && b>a)  {
+            b -= 1;
+            bAlpha = Character.isLetter(s.charAt(b)) || Character.isDigit(s.charAt(b));
         }
 
-        return x;
-    }
-
-    private static int findAlphaNumericCharBack(int x, String s) {
-        boolean aAlpha = Character.isLetter(s.charAt(x)) || Character.isDigit(s.charAt(x));
-
-        while(!aAlpha)  {
-            x -= 1;
-            aAlpha = Character.isLetter(s.charAt(x)) || Character.isDigit(s.charAt(x));
-        }
-
-        return x;
+        return new int[]{a, b};
     }
 }
