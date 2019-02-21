@@ -14,6 +14,7 @@ public class MyTest {
         String p7 = "A man, a plan, a canal: Panama";
         String p8 = "!!!";
         String p9 = "";
+        String p10 = "aaakkk";
 
         assert(Main.isPalindrome(p1) == true);
         assert(Main.isPalindrome(p2) == true);
@@ -24,6 +25,6 @@ public class MyTest {
         assert(Main.isPalindrome(p7) == true);
         assert(Main.isPalindrome(p8) == true);
         assert(Main.isPalindrome(p9) == true);
-
+        assert(Main.isPalindrome(p10) == false);
     }
 }
