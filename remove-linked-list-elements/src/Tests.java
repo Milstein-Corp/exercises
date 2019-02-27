@@ -143,37 +143,36 @@ public class Tests {
     public void reg_lists() {
 
         Integer[] raw = new Integer[] {0, 1, 2, 3, 4, 5, 6};
-        Integer target = 0;
-        Integer[] result = new Integer[] {1, 2, 3, 4, 5, 6};
+        Integer target;
+        Integer[] result;
+
+        target = 0;
+        result = new Integer[] {1, 2, 3, 4, 5, 6};
         verify_removal(raw, target, result);
 
-        ListNode initial = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 5, 6});
-        ListNode head = Solution.removeElements(initial, 6);
-        ListNode correct_answer = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 5});
-        lists_match(head, correct_answer);
+        target = 1;
+        result = new Integer[] {0, 2, 3, 4, 5, 6};
+        verify_removal(raw, target, result);
 
-        initial = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 5, 6});
-        head = Solution.removeElements(initial, 3);
-        correct_answer = linked_list(
-                new Integer[] {0, 1, 2, 4, 5, 6});
-        lists_match(head, correct_answer);
+        target = 2;
+        result = new Integer[] {0, 1, 3, 4, 5, 6};
+        verify_removal(raw, target, result);
 
-        initial = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 5, 6});
-        head = Solution.removeElements(initial, 1);
-        correct_answer = linked_list(
-                new Integer[] {0, 2, 3, 4, 5, 6});
-        lists_match(head, correct_answer);
+        target = 3;
+        result = new Integer[] {0, 1, 2, 4, 5, 6};
+        verify_removal(raw, target, result);
 
-        initial = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 5, 6});
-        head = Solution.removeElements(initial, 5);
-        correct_answer = linked_list(
-                new Integer[] {0, 1, 2, 3, 4, 6});
-        lists_match(head, correct_answer);
+        target = 4;
+        result = new Integer[] {0, 1, 2, 3, 5, 6};
+        verify_removal(raw, target, result);
+
+        target = 5;
+        result = new Integer[] {0, 1, 2, 3, 4, 6};
+        verify_removal(raw, target, result);
+
+        target = 6;
+        result = new Integer[] {0, 1, 2, 3, 4, 5};
+        verify_removal(raw, target, result);
     }
 
     private void verify_removal(Integer[] raw, Integer target,Integer[] desired_result) {
