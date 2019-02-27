@@ -9,7 +9,12 @@ import java.util.List;
 
 import static junit.framework.TestCase.fail;
 
+//Tests for class Solution
 public class Tests {
+    /**
+     * Produce a default linked list
+     * @return a linked list with 10 elements in it.
+     */
     public ListNode dummy_list() {
         ListNode head = new ListNode(0);
         ListNode curr = head;
@@ -23,7 +28,17 @@ public class Tests {
         return head;
     }
 
+    /**
+     * Produce a linked list
+     * @param a Desired contents for your linked list
+     * @return A linked list with with contents of Integer array a.
+     */
     public ListNode linked_list(Integer[] a) {
+
+        if(a == null) {
+            return null;
+        }
+
         ArrayList<Integer> i = new ArrayList<Integer>(Arrays.asList(a));
         Iterator<Integer> it = i.iterator();
 
@@ -40,6 +55,10 @@ public class Tests {
         return head;
     }
 
+    /**
+     * Print your linked list to std output for examination
+     * @param l A linked list
+     */
     public void print_ll(ListNode l) {
         while(l != null) {
             System.out.println(l.val);
@@ -47,6 +66,11 @@ public class Tests {
         }
     }
 
+    /**
+     * Are these two linked lists exactly the same?
+     * @param l1 One linked list
+     * @param l2 Another linked list
+     */
     public void lists_match(ListNode l1, ListNode l2) {
         while(l1 != null && l2 != null) {
             assert(l1.val == l2.val);
@@ -56,6 +80,24 @@ public class Tests {
         assert(l1 == null && l2 == null); 
     }
 
+    /**
+     * Verfity that a target value is removed from a linked list,
+     * everywhere it occurs.
+     * @param raw A linked list
+     * @param target The value to be removed from the linked list
+     * @param desired_result
+     */
+    private void verify_removal(
+            Integer[] raw, Integer target,Integer[] desired_result) {
+        ListNode raw_ll = linked_list(raw);
+        ListNode result = Solution.removeElements(raw_ll, target);
+        ListNode desired_result_ll = linked_list(desired_result);
+        lists_match(result, desired_result_ll);
+    }
+
+    /**
+     * Blackbox test for lists_match(..)
+     */
     @Test(timeout=1000)
     public void test_lists_match() {
         ListNode l1 = linked_list(new Integer[]{0, 0, 0, 2, 0});
@@ -91,54 +133,58 @@ public class Tests {
         } catch (AssertionError e) {}
     }
 
+    /**
+     * Blackbox test for Solution.removeElements(..), focusing on input lists
+     * of size 2 or less.
+     */
     @Test(timeout=1000)
     public void small_lists() {
+
+        Integer[] raw;
+        Integer target;
+        Integer[] result;
+
         //empty initial list
-        ListNode initial = null;
-        ListNode head = Solution.removeElements(initial, 0);
-        ListNode correct_answer = null;
-        lists_match(head, correct_answer);
+        target = 0;
+        raw = null;
+        result = null;
+        verify_removal(raw, target, result);
 
         //size=1, remove it
-        initial = linked_list(
-                new Integer[] {0});
-        head = Solution.removeElements(initial, 0);
-        correct_answer = null;
-        lists_match(head, correct_answer);
+        target = 0;
+        raw = new Integer[] {0};
+        result = null;
+        verify_removal(raw, target, result);
 
         //size=1, leave it
-        initial = linked_list(
-                new Integer[] {0});
-        head = Solution.removeElements(initial, 5);
-        correct_answer = linked_list(
-                new Integer[] {0});
-        lists_match(head, correct_answer);
+        target = 4;
+        raw = new Integer[] {0};
+        result = new Integer[] {0};
+        verify_removal(raw, target, result);
 
         //size=2, remove nothing
-        initial = linked_list(
-                new Integer[] {0, 2});
-        head = Solution.removeElements(initial, 5);
-        correct_answer = linked_list(
-                new Integer[] {0, 2});
-        lists_match(head, correct_answer);
+        target = 4;
+        raw = new Integer[] {0, 2};
+        result = new Integer[] {0, 2};
+        verify_removal(raw, target, result);
 
-        //size=2, remove leading element
-        initial = linked_list(
-                new Integer[] {0, 2});
-        head = Solution.removeElements(initial, 0);
-        correct_answer = linked_list(
-                new Integer[] {2});
-        lists_match(head, correct_answer);
+        //size=2, remove front
+        target = 0;
+        raw = new Integer[] {0, 2};
+        result = new Integer[] {2};
+        verify_removal(raw, target, result);
 
-        //size=2, remove trailing element
-        initial = linked_list(
-                new Integer[] {0, 2});
-        head = Solution.removeElements(initial, 2);
-        correct_answer = linked_list(
-                new Integer[] {0});
-        lists_match(head, correct_answer);
+        //size=2, remove end
+        target = 2;
+        raw = new Integer[] {0, 2};
+        result = new Integer[] {0};
+        verify_removal(raw, target, result);
     }
 
+    /**
+     * Blackbox test for Solution.removeElements(..), focusing on input lists
+     * around size 10.
+     */
     @Test(timeout=1000)
     public void reg_lists() {
 
@@ -175,122 +221,108 @@ public class Tests {
         verify_removal(raw, target, result);
     }
 
-    private void verify_removal(Integer[] raw, Integer target,Integer[] desired_result) {
-        ListNode raw_ll = linked_list(raw);
-        ListNode result = Solution.removeElements(raw_ll, target);
-        ListNode desired_result_ll = linked_list(desired_result);
-        lists_match(result, desired_result_ll);
-    }
-
+    /**
+     * Blackbox test for Solution.removeElements(..), focusing on input lists
+     * of size 10000.
+     */
     @Test(timeout=1000)
     public void large_lists() {
-
         //remove middle
-        Integer[] a = new Integer[10000];
-        for(int i = 0; i < a.length; i++) {
-            a[i] = i;
+        Integer[] raw = new Integer[10000];
+        for(int i = 0; i < raw.length; i++) {
+            raw[i] = i;
         }
-        ListNode initial = linked_list(a);
-        ListNode head = Solution.removeElements(initial, 5000);
-        Integer[] b = new Integer[9999];
+        Integer[] result = new Integer[9999];
         for(int i = 0; i < 5000; i++) {
-            b[i] = i;
+            result[i] = i;
         }
         for(int i = 5000; i < 9999; i++) {
-            b[i] = i+1;
+            result[i] = i+1;
         }
-        ListNode correct_answer = linked_list(b);
-        lists_match(head, correct_answer);
+        Integer target = 5000;
+        verify_removal(raw, target, result);
 
         //remove front
-        a = new Integer[10000];
-        for(int i = 0; i < a.length; i++) {
-            a[i] = i;
+        raw = new Integer[10000];
+        for(int i = 0; i < raw.length; i++) {
+            raw[i] = i;
         }
-        initial = linked_list(a);
-        head = Solution.removeElements(initial, 0);
-        b = new Integer[9999];
+        result = new Integer[9999];
         for(int i = 0; i < 9999; i++) {
-            b[i] = i+1;
+            result[i] = i+1;
         }
-        correct_answer = linked_list(b);
-        lists_match(head, correct_answer);
+        target = 0;
+        verify_removal(raw, target, result);
 
         //remove end
-        a = new Integer[10000];
-        for(int i = 0; i < a.length; i++) {
-            a[i] = i;
+        raw = new Integer[10000];
+        for(int i = 0; i < raw.length; i++) {
+            raw[i] = i;
         }
-        initial = linked_list(a);
-        head = Solution.removeElements(initial, 9999);
-        b = new Integer[9999];
-        for(int i = 0; i < b.length; i++) {
-            b[i] = i;
+        result = new Integer[9999];
+        for(int i = 0; i < result.length; i++) {
+            result[i] = i;
         }
-        correct_answer = linked_list(b);
-        lists_match(head, correct_answer);
+        target = 9999;
+        verify_removal(raw, target, result);
     }
 
+    /**
+     * Blackbox test for Solution.removeElements(..), focusing on input lists
+     * of size ~10, with repeated elements.
+     */
     @Test(timeout=1000)
-    public void repeated_elements_small() {
-        //list entirely composed of repeated elements (this test caught an issue)
-        ListNode initial = linked_list(
-                new Integer[] {0, 0});
-        ListNode head = Solution.removeElements(initial, 0);
-        ListNode correct_answer = null;
-        lists_match(head, correct_answer);
+    public void repeated_elements() {
+        Integer[] result;
+        Integer[] raw;
+        Integer target;
 
-        //repeated non-target elements
-        initial = linked_list(
-                new Integer[] {0, 0});
-        head = Solution.removeElements(initial, 5);
-        correct_answer = linked_list(
-                new Integer[] {0, 0});
-        lists_match(head, correct_answer);
+        //list entirely composed of repeated targets (this test caught an issue)
+        target = 0;
+        raw = new Integer[] {0, 0};
+        result = null;
+        verify_removal(raw, target, result);
 
-        //repeated end elements
-        initial = linked_list(
-                new Integer[] {0, 2, 2});
-        head = Solution.removeElements(initial, 2);
-        correct_answer = linked_list(
-                new Integer[] {0});
-        lists_match(head, correct_answer);
+        //repeated non-targets present
+        target = 0;
+        raw = new Integer[] {2, 2, 0};
+        result = new Integer[] {2, 2};
+        verify_removal(raw, target, result);
 
-        //repeated leading elements
-        initial = linked_list(
-                new Integer[] {2, 2, 0});
-        head = Solution.removeElements(initial, 2);
-        correct_answer = linked_list(
-                new Integer[] {0});
-        lists_match(head, correct_answer);
+        target = 0;
+        raw = new Integer[] {0, 2, 2};
+        result = new Integer[] {2, 2};
+        verify_removal(raw, target, result);
+
+        //repeated end targets
+        target = 2;
+        raw = new Integer[] {0, 2, 2};
+        result = new Integer[] {0};
+        verify_removal(raw, target, result);
+
+        //repeated leading targets
+        target = 2;
+        raw = new Integer[] {2, 2, 0};
+        result = new Integer[] {0};
+        verify_removal(raw, target, result);
+
+        target = 2;
+        raw = new Integer[] {2, 2, 2, 2, 0};
+        result = new Integer[] {0};
+        verify_removal(raw, target, result);
 
         //repeated elements in the middle
-        initial = linked_list(
-                new Integer[] {0, 2, 2, 0});
-        head = Solution.removeElements(initial, 2);
-        correct_answer = linked_list(
-                new Integer[] {0, 0});
-        lists_match(head, correct_answer);
+        target = 1000;
+        raw = new Integer[] {0, 1000, 1000, 1000, 0};
+        result = new Integer[] {0, 0};
+        verify_removal(raw, target, result);
 
-        //non contiguous repeated elements
-        initial = linked_list(
-                new Integer[] {2, 0, 0, 0});
-        head = Solution.removeElements(initial, 2);
-        correct_answer = linked_list(
-                new Integer[] {0, 0, 0});
-        lists_match(head, correct_answer);
+        //non-contiguous repeated elements
+        target = 1000;
+        raw = new Integer[] {0, 1000, 1000, 1000, 0};
+        result = new Integer[] {0, 0};
+        verify_removal(raw, target, result);
     }
-
-    @Test(timeout=1000)
-    public void repeated_elements_reg() {
-
-    }
-
-    @Test(timeout=1000)
-    public void repeated_elements_large() {
-
-    }
-
 }
 
 

@@ -1,7 +1,13 @@
 package src;
 
-
+/**
+ * Enables removal of targets from a linked list.
+ */
 public class Solution {
+
+    /**
+     * Linked lists are composed of these nodes.
+     */
     public static class ListNode {
         public ListNode next;
         public int val;
@@ -10,18 +16,22 @@ public class Solution {
         public ListNode(int x) { val = x; }
     }
 
+    /**
+     * Remove targets from a linked list.
+     * @param head The linked list
+     * @param val The target
+     * @return A Linked List with no occurrences of the value given by target
+     */
     public static ListNode removeElements(ListNode head, int val) {
-        //Make sure first element in the list is valid
+        //Pre-processing: make sure first element in the list is valid
         while(head != null && head.val == val) {
             head = head.next;
         }
-
-        // 0
+        // 0 nodes
         if(head == null) {
             return null;
         }
-
-        //1
+        // 1 node
         if(head.next == null) {
             if(head.val == val) {
                 return null;
@@ -29,9 +39,8 @@ public class Solution {
                 return head;
             }
         }
-
-        //body. invarient: prev is legit, current we might need to get rid of.
-        //invarient is easy to initialize
+        //2+ nodes. loop invariant: 'prev' references a node that will be kept,
+        //while 'curr' must be examined and possibly removed,
         ListNode prev = head;
         ListNode curr = head.next;
         while(curr != null) {
@@ -42,24 +51,30 @@ public class Solution {
                 curr = curr.next;
             }
         }
-
-        //initialize invarient - the hard part.
+        return head;
+//        //Other way to construct the 'while' loop to traverse the link-list,
+//        //uses a different invariant.
 //        ListNode prev = head;
 //        ListNode curr = head.next;
 //        eval_curr(val, prev, curr);
-
-        //body. prev and curr point at legit nodes.
+//
+//        //body. prev and curr point at nodes which will not be removed.
 //        while(curr.next != null) {
 //            prev = curr;
 //            curr = curr.next;
 //            eval_curr(val, prev, curr);
 //        }
-
-        return head;
     }
 
-    // updates curr until it points to a valid node or it is null.
-    // returns: the new curr.
+    /**
+     * Updates curr until it points to a valid node or to null.
+     * @param val The integer value to be removed from the linked list
+     * @param prev References a node that will not be removed.
+     * @param curr References a node that may or may not be removed.
+     * @return A reference to a node which will be kept and follows prev, or
+     * null. Note: The node prev is modified so that it points to the new
+     * curr or to null.
+     */
     private static ListNode eval_curr(int val, ListNode prev, ListNode curr) {
         while(curr != null && curr.val == val) {
             if(curr.next == null) {
