@@ -44,8 +44,9 @@ public class Solution {
         ListNode prev = head;
         ListNode curr = head.next;
         while(curr != null) {
+            //there are more elements in the list, curr is underconsideration
             curr = eval_curr(val, prev, curr);
-            //prev is a legit node, curr is either legit or null
+            //prev is a valid node, curr is either valid or null
             if(curr != null) {
                 prev = curr;
                 curr = curr.next;
@@ -64,6 +65,36 @@ public class Solution {
 //            curr = curr.next;
 //            eval_curr(val, prev, curr);
 //        }
+    }
+
+    public static ListNode removeElements2(ListNode head, int val) {
+        //Pre-processing: make sure first element in the list is valid
+        while(head != null && head.val == val) {
+            head = head.next;
+        }
+        // 0 nodes
+//        if(head == null) {
+//            head = null;
+//            return null;
+//        }
+        // 1 node
+//        if(head.next == null) {
+//            if(head.val == val) {
+//                return null;
+//            } else {
+//                return head;
+//            }
+//        }
+        //2+ nodes. loop invariant: 'prev' references a node that will be kept,
+        //while 'curr' must be examined and possibly removed,
+        ListNode prev = head;
+        while(prev != null) {
+            //there are more elements in the list, curr is underconsideration
+            prev = eval_curr2(val, prev);
+            //prev is a valid node, prev.next is either valid or null
+            prev = prev.next;
+        }
+        return head;
     }
 
     /**
@@ -86,5 +117,12 @@ public class Solution {
             }
         }
         return curr;
+    }
+
+    private static ListNode eval_curr2(int val, ListNode prev) {
+        while(prev.next != null && prev.next.val == val) {
+            prev.next = prev.next.next;
+        }
+        return prev;
     }
 }
