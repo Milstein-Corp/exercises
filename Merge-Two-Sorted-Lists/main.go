@@ -25,8 +25,9 @@ func main() {
 	d.Next = &e
 	e.Next = &f
 
-	g := mergeTwo(nil, &d)
+	g := mergeTwo(&a, &d)
 
+	fmt.Print("kjdfalskdf")
 	for g != nil {
 		fmt.Println(g.Val)
 		g = g.Next
@@ -39,6 +40,42 @@ type ListNode struct{
 }
 
 func mergeTwo(l1 *ListNode, l2 *ListNode) *ListNode {
+	//preprocess. Well, we are guaranteed that neither is nil
+	var last ListNode
+	var first *ListNode
+
+	first = &last
+	//advance through the body
+	for l1 != nil && l2 != nil {
+		fmt.Printf("last val is: %v\n",last.Val)
+		fmt.Printf("l1 val is nil: %v\n", l1==nil)
+		fmt.Printf("l2 val is nil: %v\n\n", l2==nil)
+
+		if l2.Val < l1.Val {
+			last.Next = l2
+			l2 = l2.Next
+		} else {
+			last.Next = l1
+			l1 = l1.Next
+		}
+		last = *last.Next
+		last.Next = nil
+	}
+
+	fmt.Printf("last val is: %v\n",last.Val)
+	fmt.Printf("l1 val is nil: %v\n", l1==nil)
+	fmt.Printf("l2 val is nil: %v\n\n", l2==nil)
+	//final condition. One or both is nil
+	if l1 != nil {
+		last.Next = l1
+	} else if l2 != nil {
+		last.Next = l1
+	}
+
+	return first.Next
+}
+
+func mergeTwoFirstAttempt(l1 *ListNode, l2 *ListNode) *ListNode {
 	//preprocess. Well, we are guaranteed that neither is nil
 	if l1 == nil {
 		return l2
