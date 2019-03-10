@@ -7,9 +7,12 @@ func main() {
 	var a ListNode
 	var b ListNode
 	var c ListNode
+	fmt.Print("a is: ")
+	fmt.Println(a)
+
 	a.Val = 1
 	b.Val = 3
-	c.Val = 5
+	c.Val = 3
 	a.Next = &b
 	b.Next = &c
 
@@ -22,8 +25,12 @@ func main() {
 	d.Next = &e
 	e.Next = &f
 
-	g := mergeTwo(&a, &d)
-	fmt.Printf("function returns: %v\n", g.Val)
+	g := mergeTwo(nil, &d)
+
+	for g != nil {
+		fmt.Println(g.Val)
+		g = g.Next
+	}
 }
 
 type ListNode struct{
@@ -32,39 +39,48 @@ type ListNode struct{
 }
 
 func mergeTwo(l1 *ListNode, l2 *ListNode) *ListNode {
-	//preprocess
+	//preprocess. Well, we are guaranteed that neither is nil
 	if l1 == nil {
 		return l2
 	} else if l2 == nil {
 		return l1
 	}
-
 	var last *ListNode
 	var first *ListNode
-
-	if l2.Val > l1.Val {
+	if l2.Val < l1.Val {
 		last = l2
 		l2 = l2.Next
 	} else {
 		last = l1
 		l1 = l1.Next
 	}
-
 	last.Next = nil
 	first = last
 
-	fmt.Printf("list one value: %v\n", l1.Val)
-	fmt.Printf("list two value: %v\n", l2.Val)
-
-	var curr *ListNode
-	curr = l1
-
-	for curr != nil {
-		fmt.Println(curr.Val)
-		curr = curr.Next
+	//advance through the body
+	for l1 != nil && l2 != nil {
+		fmt.Printf("last val is: %v\n",last.Val)
+		fmt.Printf("l1 val is: %v\n", l1.Val)
+		fmt.Printf("l2 val is: %v\n\n", l2.Val)
+		if l2.Val < l1.Val {
+			last.Next = l2
+			l2 = l2.Next
+		} else {
+			last.Next = l1
+			l1 = l1.Next
+		}
+		last = last.Next
+		last.Next = nil
 	}
 
-	var l ListNode
-	l.Val = 3
+	fmt.Printf("last val is: %v\n",last.Val)
+	fmt.Printf("l1 val is nil: %v\n", l1==nil)
+	fmt.Printf("l2 val is nil: %v\n\n", l2==nil)
+	//final condition. One ref is nil
+	if l1 == nil {
+		last.Next = l2
+	} else {
+		last.Next = l1
+	}
 	return first
 }
