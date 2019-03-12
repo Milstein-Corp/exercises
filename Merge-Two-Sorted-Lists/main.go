@@ -3,12 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("this is the way")
 	var a ListNode
 	var b ListNode
 	var c ListNode
-	fmt.Print("a is: ")
-	fmt.Println(a)
 
 	a.Val = 1
 	b.Val = 3
@@ -27,7 +24,7 @@ func main() {
 
 	g := mergeTwo(&a, &d)
 
-	fmt.Print("kjdfalskdf")
+	fmt.Println("The result iSSSs: ")
 	for g != nil {
 		fmt.Println(g.Val)
 		g = g.Next
@@ -40,17 +37,14 @@ type ListNode struct{
 }
 
 func mergeTwo(l1 *ListNode, l2 *ListNode) *ListNode {
-	//preprocess. Well, we are guaranteed that neither is nil
-	var last ListNode
-	var first *ListNode
+	//preprocess.
 
-	first = &last
+	var last *ListNode
+	var first ListNode
+	last = &first
+
 	//advance through the body
 	for l1 != nil && l2 != nil {
-		fmt.Printf("last val is: %v\n",last.Val)
-		fmt.Printf("l1 val is nil: %v\n", l1==nil)
-		fmt.Printf("l2 val is nil: %v\n\n", l2==nil)
-
 		if l2.Val < l1.Val {
 			last.Next = l2
 			l2 = l2.Next
@@ -58,18 +52,17 @@ func mergeTwo(l1 *ListNode, l2 *ListNode) *ListNode {
 			last.Next = l1
 			l1 = l1.Next
 		}
-		last = *last.Next
+		last = last.Next
 		last.Next = nil
 	}
 
-	fmt.Printf("last val is: %v\n",last.Val)
-	fmt.Printf("l1 val is nil: %v\n", l1==nil)
-	fmt.Printf("l2 val is nil: %v\n\n", l2==nil)
 	//final condition. One or both is nil
 	if l1 != nil {
 		last.Next = l1
+		l1 = nil
 	} else if l2 != nil {
-		last.Next = l1
+		last.Next = l2
+		l2 =nil
 	}
 
 	return first.Next
