@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	var a ListNode
+	var a ListNodeq
 	var b ListNode
 	var c ListNode
 
@@ -24,7 +24,7 @@ func main() {
 
 	g := mergeTwo(&a, &d)
 
-	fmt.Println("The result iSSSs: ")
+	fmt.Println("The result is: ")
 	for g != nil {
 		fmt.Println(g.Val)
 		g = g.Next
