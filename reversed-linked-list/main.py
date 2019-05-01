@@ -11,26 +11,24 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        a = head
-
-        if not a:
+        if not head:
             return None
 
-        if not a.next:
-            return a
+        if not head.next:
+            return head
 
-        if not a.next.next:
-            first = a
-            second = a.next
+        if not head.next.next:
+            first = head
+            second = head.next
             first.next = None
 
             second.next = first
 
             return second
 
-        prev = a
-        curr = a.next
-        hank = a.next.next
+        prev = head
+        curr = head.next
+        hank = head.next.next
         prev.next = None
 
         while hank:
