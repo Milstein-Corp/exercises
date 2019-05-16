@@ -1,18 +1,16 @@
 class Solution(object):
     def combine(self, n, k):
         ans = []
-
-        recent = list(range(n-k+1, n+1))
+        recent = list(range(n - k + 1, n + 1))
         ans.append(list.copy(recent))
-
         i = 0
-        while i != k:
 
+        while i != k:
             temp = recent[i] - 1
             if 0 < temp and temp not in recent:
                 recent[i] = temp
-                for j in range(i-1, -1, -1):
-                    recent[j] = recent[j+1] - 1
+                for j in range(i - 1, -1, -1):
+                    recent[j] = recent[j + 1] - 1
                     print(recent)
                 ans.append(list.copy(recent))
                 i = 0
