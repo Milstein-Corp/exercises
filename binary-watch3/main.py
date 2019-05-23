@@ -13,7 +13,7 @@ class Solution(object):
 
         times = [str(int(t[:4], 2)) + ":" + str(int(t[4:], 2)).zfill(2)
                  for t in sorted(times)
-                 if int(t[:4], 2) < 12 and int(t[4:], 2) < 60]
+                     if int(t[:4], 2) < 12 and int(t[4:], 2) < 60]
 
         return times
 
