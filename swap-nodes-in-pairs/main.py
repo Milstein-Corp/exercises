@@ -20,65 +20,32 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if not head:
-            return None
-        if head and not head.next:
-            return head
-        if head and head.next and not head.next.next:
-            head.next.next = head
-            head = head.next
-            head.next.next = None
-            return head
 
-        one = head.next.next
-        two = one.next
-        if two:
-            rest = two.next
-
-        print(one.val)
-        print(two.val)
-        print(rest.val)
-        print()
-
-        ans = head.next
-        head.next = None
+        p0 = ListNode(99)
+        ans = p0
         ans.next = head
-        ansb = head
-        ansb.next = None
 
-        print(one.val)
-        print(two.val)
-        print(rest.val)
-        print(ans.val)
-        print(ansb.val)
-        print(ansb.next)
+        while p0.next and p0.next.next:
+            p1, p2 = p0.next, p0.next.next  # (p0.next).next = (p1).next
+            # these references are set for the duration of the while loop
+            p1.next = p2.next
+            p0.next = p2
+            p2.next = p1
+            p0 = p0.next.next
 
-        while one and two:
-            ansb.next = two
-            ansb = ansb.next
-            if rest:
-                two = rest.next
-            else:
-                two = None
+        return ans.next
 
-            ansb.next = one
-            ansb = ansb.next
-            ansb.next = None
-
-            one = rest
-            if two:
-                rest = two.next
-            else:
-                rest = None
-
-        if one:
-            ansb.next = one
-            ansb = ansb.next
-
-        return head
 
 
 if __name__ == '__main__':
+    a = None
+    printl(a)
+
+    actual = Solution.swapPairs(Solution, a)
+    printl(actual)
+    print()
+
+
     a = ListNode(1)
     a.next = ListNode(2)
     printl(a)
@@ -98,35 +65,34 @@ if __name__ == '__main__':
     printl(actual)
     print()
     #
-    # a = ListNode(1)
-    # a.next = ListNode(2)
-    # a.next.next = ListNode(3)
-    # printl(a)
-    #
-    # actual = Solution.swapPairs(Solution, a)
-    # printl(actual)
-    # print()
-    #
-    # a = ListNode(1)
-    # a.next = ListNode(2)
-    # printl(a)
-    #
-    # actual = Solution.swapPairs(Solution, a)
-    # printl(actual)
-    # print()
-    #
-    #
-    # a = ListNode(1)
-    # a.next = ListNode(2)
-    # a.next.next = ListNode(3)
-    # a.next.next.next = ListNode(4)
-    # a.next.next.next.next = ListNode(5)
-    # a.next.next.next.next.next = ListNode(6)
-    #
-    # printl(a)
-    #
-    # actual = Solution.swapPairs(Solution, a)
-    # printl(actual)
-    # print()
+    a = ListNode(1)
+    a.next = ListNode(2)
+    a.next.next = ListNode(3)
+    printl(a)
+
+    actual = Solution.swapPairs(Solution, a)
+    printl(actual)
+    print()
+
+    a = ListNode(1)
+    printl(a)
+
+    actual = Solution.swapPairs(Solution, a)
+    printl(actual)
+    print()
+
+
+    a = ListNode(1)
+    a.next = ListNode(2)
+    a.next.next = ListNode(3)
+    a.next.next.next = ListNode(4)
+    a.next.next.next.next = ListNode(5)
+    a.next.next.next.next.next = ListNode(6)
+
+    printl(a)
+
+    actual = Solution.swapPairs(Solution, a)
+    printl(actual)
+    print()
 #
 #
