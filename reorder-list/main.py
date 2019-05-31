@@ -4,6 +4,7 @@ class ListNode(object):
         self.val = x
         self.next = None
 
+
 class Solution(object):
     def reorderList(self, head):
         """
@@ -15,63 +16,43 @@ class Solution(object):
         if not head.next:
             return head
 
-        one = ListNode(99)
-        two = ListNode(99)
-        oneb = one
-        twob = two
-        curr1 = head
-        curr2 = head.next
+        cur = head
+        counter = 1
+        while cur.next:
+            cur = cur.next
+            counter += 1
 
-        while curr1 and curr2:
-            oneb.next = curr1
-            twob.next = curr2
-            oneb = oneb.next
-            twob = twob.next
-            curr1 = curr1.next.next
-            if curr1:
-                curr2 = curr1.next
-            else:
-                curr2 = None
-            oneb.next = None
-            twob.next = None
+        if counter % 2 == 0:  # 2k nodes
+            cur = head
+            index = 1
+            k = int(counter / 2)
+            for i in range(k - 1):
+                cur = cur.next
+                index += 1
+            assert index == k
+        else:  # 2k + 1 nodes
+            cur = head
+            index = 1
+            k = int((counter - 1) / 2)
+            for i in range(k):
+                cur = cur.next
+                index += 1
+            assert index == k + 1
 
-        if curr1:
-            oneb.next = curr1
-            curr1 = None
-            oneb = oneb.next
-
-        one = one.next
-        two = two.next
-        two = Solution.reverse(Solution, two)
+        headb = cur
+        backhalf = cur.next
+        headb.next = None
         # lists are splintered
-        print("one     : ", end=' ')
-        cur = one
-        while cur:
-            print(cur.val, end=', ')
-            cur = cur.next
-        print()
+        backhalf = Solution.reverse(Solution, backhalf)
 
-        print("two     : ", end=' ')
-        cur = two
-        while cur:
-            print(cur.val, end=', ')
-            cur = cur.next
-        print()
-
-
-
-        cur = one
-        while cur and two:
-            insert = two
-            two = two.next
+        cur = head
+        while cur and backhalf:
+            insert = backhalf
+            backhalf = backhalf.next
 
             insert.next = cur.next
             cur.next = insert
             cur = cur.next.next
-
-
-        return one
-
 
     def reverse(self, head):
         growing = None
@@ -86,10 +67,6 @@ class Solution(object):
             growing = move
 
         return growing
-
-
-
-
 
 
 if __name__ == '__main__':
@@ -121,10 +98,10 @@ if __name__ == '__main__':
         cur = cur.next
     print()
 
-    act = Solution.reorderList(Solution, arg)
+    Solution.reorderList(Solution, arg)
 
     print("actual  : ", end=' ')
-    cur = act
+    cur = arg
     while cur:
         print(cur.val, end=', ')
         cur = cur.next
@@ -162,10 +139,10 @@ if __name__ == '__main__':
         cur = cur.next
     print()
 
-    act = Solution.reorderList(Solution, arg)
+    Solution.reorderList(Solution, arg)
 
     print("actual  : ", end=' ')
-    cur = act
+    cur = arg
     while cur:
         print(cur.val, end=', ')
         cur = cur.next
@@ -192,106 +169,106 @@ if __name__ == '__main__':
         cur = cur.next
     print()
 
-    act = Solution.reorderList(Solution, arg)
+    Solution.reorderList(Solution, arg)
 
     print("actual  : ", end=' ')
-    cur = act
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-    print()
-
-    arg = ListNode(0)
-    arg.next = ListNode(1)
-    arg.next.next = ListNode(2)
-
-    expected = ListNode(0)
-    expected.next = ListNode(2)
-    expected.next.next = ListNode(1)
-
-    print("arg     : ", end=' ')
     cur = arg
     while cur:
         print(cur.val, end=', ')
         cur = cur.next
     print()
-
-    print("expected: ", end=' ')
-    cur = expected
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
     print()
 
-    act = Solution.reorderList(Solution, arg)
-
-    print("actual  : ", end=' ')
-    cur = act
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-    print()
-
-    arg = ListNode(0)
-
-    expected = ListNode(0)
-
-    print("arg     : ", end=' ')
-    cur = arg
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-
-    print("expected: ", end=' ')
-    cur = expected
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-
-    act = Solution.reorderList(Solution, arg)
-
-    print("actual  : ", end=' ')
-    cur = act
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-    print()
-
-    arg = ListNode(1)
-    arg.next = ListNode(2)
-    arg.next.next = ListNode(3)
-    arg.next.next.next = ListNode(4)
-
-    expected = ListNode(1)
-    expected.next = ListNode(4)
-    expected.next.next = ListNode(2)
-    expected.next.next.next = ListNode(3)
-
-    print("arg     : ", end=' ')
-    cur = arg
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-
-    print("expected: ", end=' ')
-    cur = expected
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-
-    act = Solution.reorderList(Solution, arg)
-
-    print("actual  : ", end=' ')
-    cur = act
-    while cur:
-        print(cur.val, end=', ')
-        cur = cur.next
-    print()
-    print()
+    # arg = ListNode(0)
+    # arg.next = ListNode(1)
+    # arg.next.next = ListNode(2)
+    #
+    # expected = ListNode(0)
+    # expected.next = ListNode(2)
+    # expected.next.next = ListNode(1)
+    #
+    # print("arg     : ", end=' ')
+    # cur = arg
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # print("expected: ", end=' ')
+    # cur = expected
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # act = Solution.reorderList(Solution, arg)
+    #
+    # print("actual  : ", end=' ')
+    # cur = act
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    # print()
+    #
+    # arg = ListNode(0)
+    #
+    # expected = ListNode(0)
+    #
+    # print("arg     : ", end=' ')
+    # cur = arg
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # print("expected: ", end=' ')
+    # cur = expected
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # act = Solution.reorderList(Solution, arg)
+    #
+    # print("actual  : ", end=' ')
+    # cur = act
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    # print()
+    #
+    # arg = ListNode(1)
+    # arg.next = ListNode(2)
+    # arg.next.next = ListNode(3)
+    # arg.next.next.next = ListNode(4)
+    #
+    # expected = ListNode(1)
+    # expected.next = ListNode(4)
+    # expected.next.next = ListNode(2)
+    # expected.next.next.next = ListNode(3)
+    #
+    # print("arg     : ", end=' ')
+    # cur = arg
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # print("expected: ", end=' ')
+    # cur = expected
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    #
+    # act = Solution.reorderList(Solution, arg)
+    #
+    # print("actual  : ", end=' ')
+    # cur = act
+    # while cur:
+    #     print(cur.val, end=', ')
+    #     cur = cur.next
+    # print()
+    # print()
