@@ -19,38 +19,16 @@ class ListNode(object):
 
 class Solution(object):
     def deleteDuplicates(self, head):
-        if not head:
-            return None
 
+        # cur is a keeper, cur.next is under question
         cur = head
-        val = cur.val + 1
-        prev = ListNode(1)
-        dummy = prev
-        prev.next = head
-        print()
-        print("BEFORE WHILE LOOP")
-        printl(dummy, "dummy: ")
-        printl(head, "head : ")
-        while cur:
-            print("DURING WHILE LOOP")
-            # will we keep cur? prev is the end of the valid list.
-            if cur.val == val:
-                print("removing stuff")
-                prev.next = cur.next
-                cur.next = None
-                cur = prev.next
+
+        while cur and cur.next:
+            if cur.val == cur.next.val:
+                cur.next = cur.next.next
             else:
-                print("keepin stuff")
-                val = cur.val
                 cur = cur.next
-                prev = prev.next
-            printl(dummy, "dummy: ")
-            printl(head, "head : ")
-            print()
-        print("AFTER WHILE LOOP")
-        printl(dummy, "dummy: ")
-        printl(head, "head : ")
-        print()
+
         return head
 
 
