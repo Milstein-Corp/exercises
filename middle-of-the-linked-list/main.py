@@ -29,8 +29,13 @@ class Solution(object):
             fast = fast.next.next
             n = n + 1
 
-        return slow
+        if fast and not fast.next:
+            # 1 + 2n nodes
+            return slow
 
+        if not fast:
+            # fast points at 1 + 2n, but, 2n nodes.
+            return slow
 
 
 if __name__ == '__main__':
