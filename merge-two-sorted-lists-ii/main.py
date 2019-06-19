@@ -33,14 +33,12 @@ class Solution(object):
             if l1.val <= l2.val:
                 new.next = l1 # restructure the lists
                 l1 = l1.next
-                new = new.next
-                new.next = None # restructure the lists
             else:
                 new.next = l2 # restructure the lists
                 l2 = l2.next # reassign reference
-                new = new.next # reassign reference
-                new.next = None # restructure the lists
 
+            new = new.next
+            new.next = None # restructure the lists
 
         if l1:
             new.next = l1
