@@ -3,7 +3,7 @@ class Solution(object):
         # one = sorted(s)
         # two = sorted(t)
 
-        return all([s.count(c) == t.count(c) for c in s+t])
+        return all([s.count(c) == t.count(c) for c in set(s+t)])
 
         # return one == two
 
