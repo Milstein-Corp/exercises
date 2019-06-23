@@ -1,10 +1,12 @@
 class Solution(object):
     def isAnagram(self, s, t):
+        # one = sorted(s)
+        # two = sorted(t)
 
-        one = sorted(s)
-        two = sorted(t)
+        return all([s.count(c) == t.count(c) for c in s+t])
 
-        return one == two
+        # return one == two
+
 
 
 if __name__ == '__main__':
@@ -77,4 +79,3 @@ if __name__ == '__main__':
     print("actual  : " + str(actual))
     assert actual == desired
     print()
-
