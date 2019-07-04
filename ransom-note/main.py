@@ -1,16 +1,19 @@
-import string
+from collections import Counter
 class Solution(object):
     def canConstruct(self, ransomNote, magazine):
-        for l in string.ascii_lowercase:
-            if ransomNote.count(l) > magazine.count(l):
+        magazine_counts = Counter(magazine)
+        ransomNote_counts = Counter(ransomNote)
+
+        for i in ransomNote_counts:
+            if ransomNote_counts[i] > magazine_counts[i]:
                 return False
 
         return True
 
 
 if __name__ == '__main__':
-    ransomNote = "aaa"
-    magazine = "aaaa"
+    magazine = "bbbbaaaaccezq"
+    ransomNote = "aaaq"
     desired = True
     actual = Solution.canConstruct(Solution, ransomNote, magazine)
     print("magazine: %s " % magazine)
@@ -53,3 +56,4 @@ if __name__ == '__main__':
     assert desired == actual
     print()
 
+#
