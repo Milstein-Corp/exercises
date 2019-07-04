@@ -1,14 +1,9 @@
 from collections import Counter
+
+
 class Solution(object):
     def canConstruct(self, ransomNote, magazine):
-        magazine_counts = Counter(magazine)
-        ransomNote_counts = Counter(ransomNote)
-
-        for i in ransomNote_counts:
-            if ransomNote_counts[i] > magazine_counts[i]:
-                return False
-
-        return True
+        return not (Counter(ransomNote) - Counter(magazine))
 
 
 if __name__ == '__main__':
@@ -55,5 +50,3 @@ if __name__ == '__main__':
     print("actual  : " + str(actual))
     assert desired == actual
     print()
-
-#
