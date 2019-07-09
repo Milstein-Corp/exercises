@@ -9,9 +9,49 @@ class Solution(object):
                 i += 1
                 j -= 1
             else:
-                return s[i+1:j+1] == s[i+1:j+1:][::-1] or s[i:j] == s[i:j][::-1]
+                return s[i + 1:j + 1] == s[i + 1:j + 1:][::-1] or s[i:j] == s[i:j][::-1]
 
         return True
+
+    def validPalindrome_first_solution(self, s):
+        isPal = True
+        for i in range(len(s)):
+            if s[i] == s[-1 - i]:
+                pass
+            else:
+                isPal = False  # we are gonna go do that other loop
+                falsei = i  # this is the element that didn't work
+                break
+        if isPal:
+            return isPal
+
+        isPal = True
+        modify_1 = list(s)
+        del modify_1[falsei]
+        modify_1 = "".join(modify_1)
+        for i in range(len(modify_1)):
+            if modify_1[i] == modify_1[-1 - i]:
+                pass
+            else:
+                isPal = False
+                break
+        if isPal:
+            return isPal
+
+        isPal = True
+        modify_1 = list(s)
+        del modify_1[-1 - falsei]
+        modify_1 = "".join(modify_1)
+        for i in range(len(modify_1)):
+            if modify_1[i] == modify_1[-1 - i]:
+                pass
+            else:
+                isPal = False  # we are gonna go do that other loop
+                break
+        if isPal:
+            return isPal
+
+        return False
 
 
 if __name__ == '__main__':

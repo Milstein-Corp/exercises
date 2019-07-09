@@ -1,10 +1,9 @@
+import string
 from collections import Counter
-
 
 class Solution(object):
     def canConstruct(self, ransomNote, magazine):
         letters = {}
-
         for c in magazine:
             try:
                 letters[c] += 1
@@ -17,6 +16,23 @@ class Solution(object):
                 if letters[c] < 0:
                     return False
             except:
+                return False
+
+        return True
+
+    def canConstruct_second_solution(self, ransomNote, magazine):
+        magazine_counts = Counter(magazine)
+        ransomNote_counts = Counter(ransomNote)
+
+        for i in ransomNote_counts:
+            if ransomNote_counts[i] > magazine_counts[i]:
+                return False
+
+        return True
+
+    def canConstruct_first_solution(self, ransomNote, magazine):
+        for l in string.ascii_lowercase:
+            if ransomNote.count(l) > magazine.count(l):
                 return False
 
         return True
