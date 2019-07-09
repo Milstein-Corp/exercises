@@ -3,10 +3,10 @@ class Solution(object):
         i = 0
         total = 0
         for i in range(len(num1)):
-            total += 10**i * int(num1[-1-i])
+            total += 10 ** i * int(num1[-1 - i])
 
         for i in range(len(num2)):
-            total += 10**i * int(num2[-1-i])
+            total += 10 ** i * int(num2[-1 - i])
 
         return str(total)
 
@@ -15,15 +15,16 @@ class Solution(object):
         total = 0
 
         while i < len(num1):
-            total += 10**i * int(num1[-1-i])
+            total += 10 ** i * int(num1[-1 - i])
             i += 1
 
         i = 0
         while i < len(num2):
-            total += 10**i * int(num2[-1-i])
+            total += 10 ** i * int(num2[-1 - i])
             i += 1
 
         return str(total)
+
 
 if __name__ == '__main__':
     num1 = "343"
@@ -35,4 +36,3 @@ if __name__ == '__main__':
     print("actual  : " + str(actual))
     # assert desired == actual
     print()
-

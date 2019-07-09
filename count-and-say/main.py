@@ -1,5 +1,5 @@
 class Solution(object):
-    def countAndSay(self, n):
+    def countAndSay(self, n): # my way. The slow way
         if n < 1:
             return ""
 
@@ -59,6 +59,23 @@ class Solution(object):
         print("conclude function")
         print()
         return val
+
+
+    def countAndSay_solution(self, n): # The fast way
+        result = '1'
+        for _ in range(n-1):
+            prev = result
+            result = ''
+            j = 0
+            while j < len(prev):
+                cur = prev[j]
+                cnt = 1
+                j += 1
+                while j < len(prev) and prev[j] == cur:
+                    cnt += 1
+                    j += 1
+                result += str(cnt) + str(cur)
+        return result
 
 
 if __name__ == '__main__':
