@@ -3,18 +3,65 @@ from collections import defaultdict
 import re
 
 class Solution(object):
-    def compress(self, chars):
-        anchor = write = 0
-        for read, c in enumerate(chars):
-            if read + 1 == len(chars) or chars[read + 1] != c:
-                chars[write] = chars[anchor]
+
+    def write(self, curr, count, write, chars):
+        """
+        write curr and count to position write in chars
+
+        :param curr:
+        :param count:
+        :param write:
+        :param chars:
+        :return: updated write, chars
+        """
+        chars[write] = curr
+        write += 1
+        if count != 1:
+            start = write
+            for d in range(len(str(count))):
+                chars[start + d] = str(count)[d]
                 write += 1
-                if read > anchor:
-                    for digit in str(read - anchor + 1):
-                        chars[write] = digit
-                        write += 1
-                anchor = read + 1
+        return write, chars
+
+    def compress(self, chars):
+        if len(chars) == 1:
+            return 1
+
+        write = 0
+        curr = chars[0]
+        count = 1
+        examine = 1
+
+        while examine < len(chars):
+            if chars[examine] == curr:
+                count += 1
+                examine += 1
+            else:
+                write, chars = self.write(self, curr, count, write, chars)
+                curr = chars[examine]
+                count = 1
+                examine += 1
+
+        write, chars = self.write(self, curr, count, write, chars)
+
         return write
+
+
+
+
+# class Solution(object):
+#     def compress(self, chars):
+#         anchor = write = 0
+#         for read, c in enumerate(chars):
+#             if read + 1 == len(chars) or chars[read + 1] != c:
+#                 chars[write] = chars[anchor]
+#                 write += 1
+#                 if read > anchor:
+#                     for digit in str(read - anchor + 1):
+#                         chars[write] = digit
+#                         write += 1
+#                 anchor = read + 1
+#         return write
 
 
 # class Solution(object):
