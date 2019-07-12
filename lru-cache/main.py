@@ -8,17 +8,19 @@ class LRUCache:
             return -1
 
         value = self.m[key]
+        # move the key to the 'end' of the dictionary
         del self.m[key]
         self.m[key] = value
 
         return value
 
     def put(self, key: int, value: int) -> None:
+        # place the key at the 'end' of the dictionary
         if key in self.m:
             del self.m[key]
-
         self.m[key] = value
 
+        # if over capacity, delete the 'front' of the dictionary
         if len(self.m) > self.cap:
             oldest = next(iter(self.m))
             del self.m[oldest]
