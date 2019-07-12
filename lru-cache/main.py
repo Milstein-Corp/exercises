@@ -1,29 +1,30 @@
 class LRUCache:
     def __init__(self, capacity: int):
         self.cap = capacity
-        self.m = {}
+        self.d = {}
 
     def get(self, key: int) -> int:
-        if key not in self.m:
+        try:
+            value = self.d[key]
+        except KeyError:
             return -1
 
-        value = self.m[key]
         # move the key to the 'end' of the dictionary
-        del self.m[key]
-        self.m[key] = value
+        del self.d[key]
+        self.d[key] = value
 
         return value
 
     def put(self, key: int, value: int) -> None:
         # place the key at the 'end' of the dictionary
-        if key in self.m:
-            del self.m[key]
-        self.m[key] = value
+        if key in self.d:
+            del self.d[key]
+
+        self.d[key] = value
 
         # if over capacity, delete the 'front' of the dictionary
-        if len(self.m) > self.cap:
-            oldest = next(iter(self.m))
-            del self.m[oldest]
+        if len(self.d) > self.cap:
+            del self.d[next(iter(self.d))]
 
 
 # Your LRUCache object will be instantiated and called as such:
