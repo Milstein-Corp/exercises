@@ -20,7 +20,7 @@ class LRUCache:
         self.m[key] = value
 
         if len(self.m) > self.cap:
-            oldest = list(self.m.items())[0][0]
+            oldest = next(iter(self.m))
             del self.m[oldest]
 
 
