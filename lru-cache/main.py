@@ -1,29 +1,27 @@
-from collections import deque
-
 class LRUCache:
     def __init__(self, capacity: int):
         self.cap = capacity
         self.m = {}
-        self.q = deque()
 
     def get(self, key: int) -> int:
         if key not in self.m:
             return -1
 
-        self.q.remove(key)
-        self.q.append(key)
-
-        return self.m[key]
-
-    def put(self, key: int, value: int) -> None:
+        value = self.m[key]
+        del self.m[key]
         self.m[key] = value
 
-        if key in self.q:
-            self.q.remove(key)
-        self.q.append(key)
+        return value
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.m:
+            del self.m[key]
+
+        self.m[key] = value
 
         if len(self.m) > self.cap:
-            del self.m[self.q.popleft()]
+            oldest = list(self.m.items())[0][0]
+            del self.m[oldest]
 
 
 # Your LRUCache object will be instantiated and called as such:
@@ -48,12 +46,8 @@ if __name__ == '__main__':
     c.get(8)
     c.put(7, 4)
     c.get(9)
-    # 2 3 1 4 9 8 7 9
-
-
     print(c.get(4))
     print(c.get(8))
     print(c.get(7))
     print(c.get(9))
-
     print()
